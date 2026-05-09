@@ -39,13 +39,11 @@ export default function AboutPage() {
           </p>
         </div>
         {/* Image placeholder */}
-        <div style={{
-          aspectRatio: '4/3', background: 'var(--cream-dark)', borderRadius: '4px',
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          border: '1px solid var(--gold-light)',
-        }}>
-          <span style={{ fontFamily: 'var(--font-script)', fontSize: '28px', color: 'rgba(201,169,110,0.4)' }}>our photo</span>
-        </div>
+        <img
+          src="https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=800&q=80"
+          alt="Our Story"
+          style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '4px' }}
+        />
       </div>
 
       {/* Values */}
@@ -77,12 +75,11 @@ export default function AboutPage() {
         <div style={{ display: 'flex', gap: '32px', justifyContent: 'center', flexWrap: 'wrap' }}>
           {team.map((t, i) => (
             <div key={i} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '12px' }}>
-              <div style={{
-                width: '100px', height: '100px', borderRadius: '50%',
-                background: 'var(--cream-dark)', border: '2px solid var(--gold-light)',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                fontFamily: 'var(--font-display)', fontSize: '28px', color: 'var(--gold-dark)',
-              }}>{t.name[0]}</div>
+              <img
+                src={`https://api.dicebear.com/7.x/initials/svg?seed=${t.name}&backgroundColor=e8d5b0&textColor=a8864e`}
+                alt={t.name}
+                style={{ width: '100px', height: '100px', borderRadius: '50%', border: '2px solid var(--gold-light)' }}
+              />
               <p style={{ fontFamily: 'var(--font-display)', fontSize: '18px', color: 'var(--charcoal)' }}>{t.name}</p>
               <p style={{ fontSize: '12px', letterSpacing: '1px', textTransform: 'uppercase', color: 'var(--gold)' }}>{t.role}</p>
             </div>

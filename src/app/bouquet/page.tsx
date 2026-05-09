@@ -4,6 +4,7 @@ import Footer from '@/components/Footer'
 import AddToCartButton from '@/components/AddToCartButton'
 import CustomBouquetBuilder from '@/components/CustomBouquetBuilder'
 import { supabase } from '@/lib/supabase'
+import Image from 'next/image'
 
 type Product = {
   id: number; name: string; category: string;
@@ -20,7 +21,11 @@ export default function BouquetPage() {
 
   useEffect(() => {
     async function fetch() {
-      const { data } = await supabase.from('products').select('*').eq('category', 'Bouquet')
+      const { data } = await supabase
+      .from('products')
+      .select('*')
+      .eq('category', 'Bouquet')
+      .ilike('name', '%Bouquet%')
       if (data) setBouquets(data)
       setLoading(false)
     }
@@ -69,7 +74,7 @@ export default function BouquetPage() {
             >
               <div style={{ width: '100%', aspectRatio: '1/1', position: 'relative', overflow: 'hidden' }}>
                 {b.images?.[0] ? (
-                  <img src={b.images[0]} alt={b.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  <Image src={b.images[0]} alt={b.name} fill style={{ objectFit: 'cover' }} sizes="(max-width: 768px) 100vw, 25vw" />
                 ) : (
                   <div style={{ width: '100%', height: '100%', background: 'var(--cream-dark)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                     <span style={{ fontFamily: 'var(--font-script)', fontSize: '18px', color: 'rgba(201,169,110,0.4)' }}>photo</span>

@@ -5,6 +5,7 @@ import AddToCartButton from '@/components/AddToCartButton'
 import { supabase } from '@/lib/supabase'
 import { useSearchParams } from 'next/navigation'
 import { Suspense } from 'react'
+import Image from 'next/image'
 
 const categories = ['All', 'Bouquet', 'Amigurumi', 'Home Décor', 'Custom']
 
@@ -122,7 +123,7 @@ function ShopContent() {
             >
               <div style={{ width: '100%', aspectRatio: '1/1', position: 'relative', overflow: 'hidden' }}>
                 {p.images?.[0] ? (
-                  <img src={p.images[0]} alt={p.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  <Image src={p.images[0]} alt={p.name} fill style={{ objectFit: 'cover' }} sizes="(max-width: 768px) 100vw, 25vw" />
                 ) : (
                   <div style={{ width: '100%', height: '100%', background: 'var(--cream-dark)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                     <span style={{ fontFamily: 'var(--font-script)', fontSize: '18px', color: 'rgba(201,169,110,0.4)' }}>photo</span>

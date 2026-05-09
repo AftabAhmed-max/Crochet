@@ -144,31 +144,18 @@ export default function Hero() {
           justifyContent: 'center',
           alignItems: 'center',
         }}>
-          <div style={{
-            width: '100%',
-            maxWidth: '460px',
-            aspectRatio: '3/4',
-            background: 'rgba(201,169,110,0.08)',
-            border: '1px solid rgba(201,169,110,0.2)',
-            borderRadius: '4px',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: '12px',
-          }}>
-            <span style={{
-              fontFamily: 'var(--font-script)',
-              fontSize: '32px',
-              color: 'rgba(201,169,110,0.4)',
-            }}>crochetinggg</span>
-            <p style={{
-              fontSize: '12px',
-              color: 'rgba(250,247,242,0.2)',
-              letterSpacing: '2px',
-              textTransform: 'uppercase',
-            }}>Hero Image Here</p>
-          </div>
+          <img
+            src="https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?w=800&q=80"
+            alt="Crochet Bouquet"
+            style={{
+              width: '100%',
+              maxWidth: '460px',
+              aspectRatio: '3/4',
+              objectFit: 'cover',
+              borderRadius: '4px',
+              border: '1px solid rgba(201,169,110,0.2)',
+            }}
+          />
 
           {/* Floating tag */}
           <div style={{
