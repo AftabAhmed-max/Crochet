@@ -14,8 +14,8 @@ export async function POST(req: Request) {
 
   try {
     const result = await resend.emails.send({
-      from: 'Crochetinggg <onboarding@resend.dev>',
-      to: 'siddiquiaftab2001@gmail.com',
+      from: 'Crochetinggg <orders@cozycrochets.site>',
+      to: email,
       subject: `Order Confirmed #${orderId} — Crochetinggg`,
       html: `
         <div style="font-family:sans-serif;max-width:600px;margin:0 auto;background:#FAF7F2;padding:40px 24px">
