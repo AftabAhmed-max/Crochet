@@ -45,7 +45,7 @@ export default function AccountPage() {
     if (!form.email) return setError('Enter your email.')
     setLoading(true)
     const { error } = await supabase.auth.resetPasswordForEmail(form.email, {
-      redirectTo: 'http://localhost:3000/account/reset'
+      redirectTo: 'https://www.cozycrochets.site/account/reset'
     })
     if (error) setError(error.message)
     else setSuccess('Password reset email sent!')
