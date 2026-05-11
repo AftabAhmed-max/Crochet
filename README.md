@@ -1,36 +1,77 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Crochetinggg — You Dream We Crochet
 
-## Getting Started
+> Handcrafted crochet pieces made with love. Every stitch tells a story.
 
-First, run the development server:
+🌐 **Live Site:** [cozycrochets.site](https://www.cozycrochets.site/)
+
+---
+
+## About
+
+Crochetinggg is a full stack e-commerce website built for a real handmade 
+crochet business based in Mumbai. It allows customers to browse products 
+by category, add items to cart, place orders via Razorpay, and submit 
+custom crochet order requests. Built and deployed by Stackwork.
+
+---
+
+## Pages
+
+- **Home** — Hero, best sellers, shop by category, testimonials
+- **Shop** — Full product listing with category filters
+- **Bouquet** — Dedicated bouquet collection page
+- **About** — Brand story
+- **Product Detail** — Individual product with add to cart
+- **Cart & Checkout** — Cart management and Razorpay payment flow
+- **Custom Orders** — Form for submitting custom crochet requests
+
+---
+
+## Key Features
+
+- Full e-commerce flow from browsing to payment
+- Razorpay payment integration (test mode)
+- Product filtering by category
+- Custom order request form
+- Fully responsive across mobile, tablet, and desktop
+- Deployed on a custom domain
+
+---
+
+## Tech Stack
+
+| Technology | Purpose |
+|---|---|
+| Next.js 14 | Framework |
+| Tailwind CSS v4 | Styling |
+| Supabase | Database and product management |
+| Razorpay | Payment gateway |
+| Vercel | Deployment |
+| Custom Domain | cozycrochets.site |
+
+---
+
+## Running Locally
 
 ```bash
+git clone https://github.com/AftabAhmed-max/cozycrochets.git
+cd cozycrochets
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Add your environment variables to .env.local:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```env
+NEXT_PUBLIC_SUPABASE_URL=
+NEXT_PUBLIC_SUPABASE_ANON_KEY=
+NEXT_PUBLIC_RAZORPAY_KEY_ID=
+RAZORPAY_KEY_SECRET=
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## Built By
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+**[Stackwork](https://stackwork.vercel.app/)** — Digital agency serving 
+businesses across India and the Gulf.
