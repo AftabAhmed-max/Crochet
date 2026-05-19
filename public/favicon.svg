@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <defs>
+    <clipPath id="ball-clip">
+      <circle cx="16" cy="16" r="11"/>
+    </clipPath>
+    <radialGradient id="ball-grad" cx="42%" cy="38%" r="60%">
+      <stop offset="0%" stop-color="#D8BF8E"/>
+      <stop offset="100%" stop-color="#B8924E"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Charcoal rounded-square background -->
+  <rect width="32" height="32" rx="7" fill="#1A1A1A"/>
+
+  <!-- Yarn ball base (gradient for depth) -->
+  <circle cx="16" cy="16" r="11" fill="url(#ball-grad)"/>
+
+  <!-- Yarn wrapping stripes, clipped to the ball -->
+  <g clip-path="url(#ball-clip)" fill="none" stroke="#7A5D2F" stroke-linecap="round">
+    <!-- Three horizontal bands curving with the sphere -->
+    <path d="M5 11.5 Q16 8.5 27 11.5" stroke-width="2.4"/>
+    <path d="M5 16   Q16 13   27 16"   stroke-width="2.4"/>
+    <path d="M5 20.5 Q16 17.5 27 20.5" stroke-width="2.4"/>
+    <!-- Two vertical bands for cross-hatched yarn look -->
+    <path d="M11.5 5 Q8.5 16 11.5 27"  stroke-width="1.4" opacity="0.45"/>
+    <path d="M20.5 5 Q23.5 16 20.5 27" stroke-width="1.4" opacity="0.45"/>
+  </g>
+
+  <!-- Soft specular highlight -->
+  <ellipse cx="12.5" cy="11.5" rx="3" ry="2"
+           fill="white" opacity="0.18"
+           transform="rotate(-25 12.5 11.5)"/>
+
+  <!-- Yarn tail curling away from the ball -->
+  <path d="M24 7 C26 4.5 29.5 5.5 27.5 9"
+        stroke="#C9A96E" stroke-width="1.6"
+        fill="none" stroke-linecap="round"/>
+</svg>
