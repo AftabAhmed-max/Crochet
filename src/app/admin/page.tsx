@@ -2,9 +2,8 @@
 import { useState, useEffect } from 'react'
 import { supabase } from '@/lib/supabase'
 
-const ADMIN_PASSWORD = 'crochet2026'
-
 type Product = { id: number; name: string; category: string; price: number; stock: number; tag: string | null; description: string | null }
+type OrderItem = { name: string; qty: number; price: number }
 type Order = {
   id: number
   customer_name: string
@@ -14,7 +13,7 @@ type Order = {
   total: number
   status: string
   created_at: string
-  items: any
+  items: OrderItem[]
 }
 
 const categories = ['Bouquet', 'Amigurumi', 'Home Décor', 'Custom']
@@ -30,11 +29,33 @@ export default function AdminPage() {
   const [products, setProducts] = useState<Product[]>([])
   const [orders, setOrders] = useState<Order[]>([])
   const [loading, setLoading] = useState(false)
+  const [loginLoading, setLoginLoading] = useState(false)
   const [form, setForm] = useState({ name: '', category: 'Bouquet', price: '', stock: '', tag: '', description: '' })
   const [msg, setMsg] = useState('')
   const [imageFile, setImageFile] = useState<File | null>(null)
 
-  useEffect(() => { if (auth) { 
+  async function handleLogin() {
+    setLoginLoading(true)
+    try {
+      const res = await fetch('/api/admin/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password: pass }),
+      })
+      const data = await res.json()
+      if (data.success) {
+        localStorage.setItem('adminAuth', 'true')
+        setAuth(true)
+      } else {
+        setMsg('Wrong password')
+      }
+    } catch {
+      setMsg('Login failed. Please try again.')
+    }
+    setLoginLoading(false)
+  }
+
+  useEffect(() => { if (auth) {
     fetchProducts()
     fetchOrders() 
     const interval = setInterval(fetchOrders, 30000)
@@ -112,12 +133,12 @@ export default function AdminPage() {
         <span style={{ fontFamily: 'var(--font-script)', fontSize: '32px', color: 'var(--gold-dark)' }}>Admin</span>
         <p style={{ fontSize: '12px', letterSpacing: '2px', textTransform: 'uppercase', color: 'var(--brown-soft)', margin: '16px 0 24px' }}>Enter Password</p>
         <input type="password" value={pass} onChange={e => setPass(e.target.value)}
-          onKeyDown={e => e.key === 'Enter' && pass === ADMIN_PASSWORD ? (localStorage.setItem('adminAuth', 'true'), setAuth(true)) : setMsg('Wrong password')}
+          onKeyDown={e => { if (e.key === 'Enter') handleLogin() }}
           style={inputStyle} placeholder="Password" />
         {msg && <p style={{ color: '#EF4444', fontSize: '13px', marginTop: '12px' }}>{msg}</p>}
         <button className="btn-primary" style={{ width: '100%', marginTop: '16px' }}
-          onClick={() => pass === ADMIN_PASSWORD ? (localStorage.setItem('adminAuth', 'true'), setAuth(true)) : setMsg('Wrong password')}>
-          Login
+          onClick={handleLogin} disabled={loginLoading}>
+          {loginLoading ? 'Checking...' : 'Login'}
         </button>
       </div>
     </div>
@@ -249,7 +270,7 @@ export default function AdminPage() {
                       </td>
                       <td style={{ padding: '12px 16px', fontWeight: 500 }}>₹{o.total}</td>
                       <td style={{ padding: '12px 16px', fontSize: '12px', color: 'var(--brown-soft)', maxWidth: '200px' }}>
-                        {Array.isArray(o.items) ? o.items.map((i: any) => `${i.name} x${i.qty}`).join(', ') : '—'}
+                        {Array.isArray(o.items) ? o.items.map((i: OrderItem) => `${i.name} x${i.qty}`).join(', ') : '—'}
                       </td>
                       <td style={{ padding: '12px 16px', fontSize: '12px', color: 'var(--brown-soft)' }}>{o.address}</td>
                       <td style={{ padding: '12px 16px' }}>

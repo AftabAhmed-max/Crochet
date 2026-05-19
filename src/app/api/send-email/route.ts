@@ -3,17 +3,23 @@ import { Resend } from 'resend'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
+type OrderItem = { name: string; qty: number; price: number }
+
 export async function POST(req: Request) {
   const { name, email, items, total, orderId } = await req.json()
 
-  const itemsList = items.map((i: any) => `<tr>
+  if (!name || !email || !Array.isArray(items) || typeof total !== 'number' || !orderId) {
+    return NextResponse.json({ error: 'Invalid request data' }, { status: 400 })
+  }
+
+  const itemsList = items.map((i: OrderItem) => `<tr>
     <td style="padding:8px 12px;border-bottom:1px solid #F0EBE1">${i.name}</td>
     <td style="padding:8px 12px;border-bottom:1px solid #F0EBE1;text-align:center">${i.qty}</td>
     <td style="padding:8px 12px;border-bottom:1px solid #F0EBE1;text-align:right">₹${i.price * i.qty}</td>
   </tr>`).join('')
 
   try {
-    const result = await resend.emails.send({
+    await resend.emails.send({
       from: 'Crochetinggg <orders@cozycrochets.site>',
       to: email,
       subject: `Order Confirmed #${orderId} — Crochetinggg`,
@@ -43,10 +49,8 @@ export async function POST(req: Request) {
         </div>
       `,
     })
-    console.log('Email result:', result)
     return NextResponse.json({ success: true })
   } catch (err) {
-    console.error('Email error:', err)
     return NextResponse.json({ error: String(err) }, { status: 500 })
   }
 }

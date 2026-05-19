@@ -22,7 +22,7 @@ export default function Testimonials() {
           {testimonials.map((t, i) => (
             <div key={t.id} className={`fade-up fade-up-${Math.min(i+1,4)}`} style={{ background: 'var(--white)', border: '1px solid var(--cream-dark)', borderRadius: '4px', padding: '32px 28px' }}>
               <div style={{ color: 'var(--gold)', fontSize: '16px', marginBottom: '16px', letterSpacing: '2px' }}>{'★'.repeat(t.rating)}</div>
-              <p style={{ fontSize: '15px', lineHeight: 1.8, color: 'var(--brown-soft)', marginBottom: '24px', fontStyle: 'italic' }}>"{t.text}"</p>
+              <p style={{ fontSize: '15px', lineHeight: 1.8, color: 'var(--brown-soft)', marginBottom: '24px', fontStyle: 'italic' }}>&ldquo;{t.text}&rdquo;</p>
               <div style={{ display: 'flex', alignItems: 'center', gap: '12px', borderTop: '1px solid var(--cream-dark)', paddingTop: '20px' }}>
                 <div style={{ width: '40px', height: '40px', borderRadius: '50%', background: 'var(--cream-dark)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--font-display)', fontSize: '16px', color: 'var(--gold-dark)' }}>{t.name[0]}</div>
                 <div>

@@ -11,6 +11,7 @@ export default function Navbar() {
   const { totalItems } = useCart()
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setMounted(true)
     const check = () => setIsMobile(window.innerWidth < 768)
     check()
@@ -48,7 +49,9 @@ export default function Navbar() {
           <Link href="/account" style={{ color: 'var(--charcoal)' }}><User size={20} /></Link>
           <Link href="/cart" style={{ color: 'var(--charcoal)', position: 'relative' }}>
             <ShoppingCart size={20} />
-            <span style={{ position: 'absolute', top: '-8px', right: '-8px', background: 'var(--gold)', color: 'white', borderRadius: '50%', width: '16px', height: '16px', fontSize: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{totalItems}</span>
+            {totalItems > 0 && (
+              <span style={{ position: 'absolute', top: '-8px', right: '-8px', background: 'var(--gold)', color: 'white', borderRadius: '50%', width: '16px', height: '16px', fontSize: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{totalItems}</span>
+            )}
           </Link>
           {isMobile && (
             <button onClick={() => setMenuOpen(!menuOpen)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--charcoal)' }}>

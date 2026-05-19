@@ -52,11 +52,11 @@ export default function CustomBouquetBuilder() {
 
       addItem({
         id: Date.now(),
-        name: `Custom Bouquet`,
+        name: 'Custom Bouquet',
         category: 'Custom Bouquet',
         price: total,
         description,
-      } as any)
+      })
 
       setSuccess(true)
     }

@@ -1,4 +1,5 @@
 'use client'
+import Image from 'next/image'
 import Footer from '@/components/Footer'
 
 const values = [
@@ -35,15 +36,18 @@ export default function AboutPage() {
             It started in 2021 with a single crochet flower gifted to a friend. The smile on her face said everything. Soon, more friends asked, then strangers, then the internet.
           </p>
           <p style={{ fontSize: '15px', color: 'var(--brown-soft)', lineHeight: 1.9 }}>
-            Today, crochetinggg ships handcrafted pieces across India — each one unique, each one made with intention. We believe handmade is not just a product, it's a feeling.
+            Today, crochetinggg ships handcrafted pieces across India — each one unique, each one made with intention. We believe handmade is not just a product, it&apos;s a feeling.
           </p>
         </div>
-        {/* Image placeholder */}
-        <img
-          src="https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=800&q=80"
-          alt="Our Story"
-          style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '4px' }}
-        />
+        <div style={{ position: 'relative', width: '100%', minHeight: '400px' }}>
+          <Image
+            src="https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=800&q=80"
+            alt="Our Story"
+            fill
+            sizes="(max-width: 768px) 100vw, 50vw"
+            style={{ objectFit: 'cover', borderRadius: '4px' }}
+          />
+        </div>
       </div>
 
       {/* Values */}
@@ -75,6 +79,7 @@ export default function AboutPage() {
         <div style={{ display: 'flex', gap: '32px', justifyContent: 'center', flexWrap: 'wrap' }}>
           {team.map((t, i) => (
             <div key={i} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '12px' }}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={`https://api.dicebear.com/7.x/initials/svg?seed=${t.name}&backgroundColor=e8d5b0&textColor=a8864e`}
                 alt={t.name}
@@ -90,7 +95,7 @@ export default function AboutPage() {
       {/* CTA */}
       <div style={{ background: 'var(--charcoal)', padding: '80px 24px', textAlign: 'center' }}>
         <h2 style={{ fontFamily: 'var(--font-script)', fontSize: 'clamp(36px, 5vw, 60px)', color: 'var(--gold)', marginBottom: '16px' }}>You dream, we crochet.</h2>
-        <p style={{ fontSize: '15px', color: 'rgba(250,247,242,0.6)', marginBottom: '32px' }}>Let's create something beautiful together.</p>
+        <p style={{ fontSize: '15px', color: 'rgba(250,247,242,0.6)', marginBottom: '32px' }}>Let&apos;s create something beautiful together.</p>
         <a href="/shop"><button className="btn-primary">Shop Now</button></a>
       </div>
 

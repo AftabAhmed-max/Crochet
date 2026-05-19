@@ -1,5 +1,6 @@
 'use client'
 import Link from 'next/link'
+import Image from 'next/image'
 import Footer from '@/components/Footer'
 import { useCart } from '@/context/CartContext'
 import { useEffect, useState } from 'react'
@@ -23,7 +24,7 @@ export default function CartPage() {
     <>
       <div style={{ minHeight: '60vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '16px' }}>
         <span style={{ fontFamily: 'var(--font-script)', fontSize: '48px', color: 'var(--gold)' }}>Your cart is empty</span>
-        <p style={{ color: 'var(--brown-soft)', fontSize: '15px' }}>Looks like you haven't added anything yet.</p>
+        <p style={{ color: 'var(--brown-soft)', fontSize: '15px' }}>Looks like you haven&apos;t added anything yet.</p>
         <Link href="/shop"><button className="btn-primary">Start Shopping</button></Link>
       </div>
       <Footer />
@@ -79,9 +80,9 @@ export default function CartPage() {
                 display: 'flex', gap: '20px', alignItems: 'center',
                 padding: '20px 0', borderBottom: '1px solid var(--cream-dark)',
               }}>
-                <div style={{ width: '90px', height: '90px', flexShrink: 0, borderRadius: '4px', overflow: 'hidden' }}>
+                <div style={{ width: '90px', height: '90px', flexShrink: 0, borderRadius: '4px', overflow: 'hidden', position: 'relative' }}>
                   {item.images?.[0] ? (
-                    <img src={item.images[0]} alt={item.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    <Image src={item.images[0]} alt={item.name} fill sizes="90px" style={{ objectFit: 'cover' }} />
                   ) : (
                     <div style={{ width: '100%', height: '100%', background: 'var(--cream-dark)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                       <span style={{ fontFamily: 'var(--font-script)', fontSize: '12px', color: 'rgba(201,169,110,0.5)' }}>photo</span>

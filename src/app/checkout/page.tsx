@@ -5,12 +5,18 @@ import { supabase } from '@/lib/supabase'
 import { useRouter } from 'next/navigation'
 import Footer from '@/components/Footer'
 
+declare global {
+  interface Window {
+    Razorpay: new (options: Record<string, unknown>) => { open: () => void }
+  }
+}
+
 export default function CheckoutPage() {
   const { items, subtotal, clearCart } = useCart()
   const router = useRouter()
   const shipping = subtotal > 999 ? 0 : 99
   const total = subtotal + shipping
-  const [user, setUser] = useState<any>(null)
+  const [user, setUser] = useState<{ user_metadata?: { full_name?: string; phone?: string }; email?: string } | null>(null)
   const [loading, setLoading] = useState(false)
   const [form, setForm] = useState({ name: '', email: '', phone: '', address: '', city: '', pincode: '', state: '' })
   const [errors, setErrors] = useState<string[]>([])
@@ -28,7 +34,7 @@ export default function CheckoutPage() {
   const update = (k: string, v: string) => setForm(p => ({ ...p, [k]: v }))
 
   function validate() {
-    const errs = []
+    const errs: string[] = []
     if (!form.name) errs.push('Name is required.')
     if (!form.email) errs.push('Email is required.')
     if (!form.phone || form.phone.length < 10) errs.push('Valid phone number required.')
@@ -46,15 +52,18 @@ export default function CheckoutPage() {
     setLoading(true)
 
     try {
-      // Create Razorpay order
       const res = await fetch('/api/razorpay', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ amount: total }),
       })
       const order = await res.json()
+      if (!order.id) {
+        setErrors(['Failed to initiate payment. Please try again.'])
+        setLoading(false)
+        return
+      }
 
-      // Load Razorpay script
       const script = document.createElement('script')
       script.src = 'https://checkout.razorpay.com/v1/checkout.js'
       document.body.appendChild(script)
@@ -69,48 +78,51 @@ export default function CheckoutPage() {
           order_id: order.id,
           prefill: { name: form.name, email: form.email, contact: form.phone },
           theme: { color: '#C9A96E' },
-          handler: async () => {
-            const { data: orderData } = await supabase.from('orders').insert({
-              customer_name: form.name,
-              customer_email: form.email,
-              customer_phone: form.phone,
-              address: `${form.address}, ${form.city}, ${form.state} - ${form.pincode}`,
-              items, subtotal, shipping, total,
-              status: 'confirmed',
-            }).select().single()
+          handler: async (response: { razorpay_payment_id: string; razorpay_order_id: string; razorpay_signature: string }) => {
+            try {
+              const verifyRes = await fetch('/api/razorpay/verify', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  razorpay_payment_id: response.razorpay_payment_id,
+                  razorpay_order_id: response.razorpay_order_id,
+                  razorpay_signature: response.razorpay_signature,
+                  customerData: form,
+                  items,
+                  subtotal,
+                  shipping,
+                  total,
+                }),
+              })
+              const verifyData = await verifyRes.json()
 
-
-            await fetch('/api/send-email', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                name: form.name,
-                email: form.email,
-                items,
-                total,
-                orderId: orderData?.id,
-              }),
-            })
-
-            for (const item of items) {
-              const { data: product } = await supabase
-                .from('products')
-                .select('stock')
-                .eq('id', item.id)
-                .single()
-              if (product) {
-                await supabase
-                  .from('products')
-                  .update({ stock: Math.max(0, product.stock - item.qty) })
-                  .eq('id', item.id)
+              if (!verifyData.success) {
+                setErrors(['Payment verification failed. Please contact support.'])
+                setLoading(false)
+                return
               }
-            }
 
-            clearCart()
-            router.push('/order-success')
+              await fetch('/api/send-email', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  name: form.name,
+                  email: form.email,
+                  items,
+                  total,
+                  orderId: verifyData.orderId,
+                }),
+              })
+
+              clearCart()
+              router.push('/order-success')
+            } catch {
+              setErrors(['Payment verification failed. Please try again.'])
+              setLoading(false)
+            }
           },
         }
-        const rzp = new (window as any).Razorpay(options)
+        const rzp = new window.Razorpay(options as Record<string, unknown>)
         rzp.open()
         setLoading(false)
       }

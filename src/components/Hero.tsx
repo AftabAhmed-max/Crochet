@@ -1,4 +1,7 @@
 'use client'
+import Link from 'next/link'
+import Image from 'next/image'
+
 export default function Hero() {
   return (
     <section style={{
@@ -91,20 +94,22 @@ export default function Hero() {
           </p>
 
           <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
-            <button className="btn-primary">Shop Now</button>
-            <button className="btn-outline" style={{
-              color: 'var(--cream)',
-              borderColor: 'rgba(250,247,242,0.4)',
-            }}
-              onMouseEnter={e => {
-                (e.currentTarget as HTMLButtonElement).style.background = 'rgba(250,247,242,0.1)'
+            <Link href="/shop"><button className="btn-primary">Shop Now</button></Link>
+            <Link href="/about">
+              <button className="btn-outline" style={{
+                color: 'var(--cream)',
+                borderColor: 'rgba(250,247,242,0.4)',
               }}
-              onMouseLeave={e => {
-                (e.currentTarget as HTMLButtonElement).style.background = 'transparent'
-              }}
-            >
-              Our Story
-            </button>
+                onMouseEnter={e => {
+                  (e.currentTarget as HTMLButtonElement).style.background = 'rgba(250,247,242,0.1)'
+                }}
+                onMouseLeave={e => {
+                  (e.currentTarget as HTMLButtonElement).style.background = 'transparent'
+                }}
+              >
+                Our Story
+              </button>
+            </Link>
           </div>
 
           {/* Stats */}
@@ -144,13 +149,16 @@ export default function Hero() {
           justifyContent: 'center',
           alignItems: 'center',
         }}>
-          <img
+          <Image
             src="https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?w=800&q=80"
             alt="Crochet Bouquet"
+            width={460}
+            height={614}
+            sizes="(max-width: 768px) 100vw, 460px"
             style={{
               width: '100%',
               maxWidth: '460px',
-              aspectRatio: '3/4',
+              height: 'auto',
               objectFit: 'cover',
               borderRadius: '4px',
               border: '1px solid rgba(201,169,110,0.2)',

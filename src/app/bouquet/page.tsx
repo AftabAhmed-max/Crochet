@@ -25,7 +25,6 @@ export default function BouquetPage() {
       .from('products')
       .select('*')
       .eq('category', 'Bouquet')
-      .ilike('name', '%Bouquet%')
       if (data) setBouquets(data)
       setLoading(false)
     }

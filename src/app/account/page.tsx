@@ -6,7 +6,7 @@ import Footer from '@/components/Footer'
 export default function AccountPage() {
   const [mode, setMode] = useState<'login' | 'signup' | 'reset'>('login')
   const [form, setForm] = useState({ name: '', email: '', password: '', phone: '' })
-  const [user, setUser] = useState<any>(null)
+  const [user, setUser] = useState<{ user_metadata?: { full_name?: string }; email?: string; email_confirmed_at?: string } | null>(null)
   const [loading, setLoading] = useState(false)
   const [msg, setMsg] = useState({ text: '', error: false })
 
@@ -44,8 +44,9 @@ export default function AccountPage() {
   async function handleReset() {
     if (!form.email) return setError('Enter your email.')
     setLoading(true)
+    const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://www.cozycrochets.site'
     const { error } = await supabase.auth.resetPasswordForEmail(form.email, {
-      redirectTo: 'https://www.cozycrochets.site/account/reset'
+      redirectTo: `${appUrl}/account/reset`,
     })
     if (error) setError(error.message)
     else setSuccess('Password reset email sent!')
