@@ -20,10 +20,7 @@ const categories = ['Bouquet', 'Amigurumi', 'Home Décor', 'Custom']
 const statuses = ['pending', 'confirmed', 'dispatched', 'delivered', 'cancelled']
 
 export default function AdminPage() {
-  const [auth, setAuth] = useState(() => {
-    if (typeof window !== 'undefined') return localStorage.getItem('adminAuth') === 'true'
-    return false
-  })
+  const [auth, setAuth] = useState<boolean | null>(null) // null = loading
   const [pass, setPass] = useState('')
   const [tab, setTab] = useState<'products' | 'orders'>('products')
   const [products, setProducts] = useState<Product[]>([])
@@ -33,6 +30,12 @@ export default function AdminPage() {
   const [form, setForm] = useState({ name: '', category: 'Bouquet', price: '', stock: '', tag: '', description: '' })
   const [msg, setMsg] = useState('')
   const [imageFile, setImageFile] = useState<File | null>(null)
+
+  useEffect(() => {
+    fetch('/api/admin/verify')
+      .then(r => setAuth(r.ok))
+      .catch(() => setAuth(false))
+  }, [])
 
   async function handleLogin() {
     setLoginLoading(true)
@@ -44,7 +47,6 @@ export default function AdminPage() {
       })
       const data = await res.json()
       if (data.success) {
-        localStorage.setItem('adminAuth', 'true')
         setAuth(true)
       } else {
         setMsg('Wrong password')
@@ -55,12 +57,19 @@ export default function AdminPage() {
     setLoginLoading(false)
   }
 
-  useEffect(() => { if (auth) {
-    fetchProducts()
-    fetchOrders() 
-    const interval = setInterval(fetchOrders, 30000)
-    return () => clearInterval(interval)
-  } }, [auth])
+  async function handleLogout() {
+    await fetch('/api/admin/logout', { method: 'POST' })
+    setAuth(false)
+  }
+
+  useEffect(() => {
+    if (auth) {
+      fetchProducts()
+      fetchOrders()
+      const interval = setInterval(fetchOrders, 30000)
+      return () => clearInterval(interval)
+    }
+  }, [auth])
 
   async function fetchProducts() {
     const { data } = await supabase.from('products').select('*').order('created_at', { ascending: false })
@@ -71,7 +80,6 @@ export default function AdminPage() {
     const { data } = await supabase.from('orders').select('*').order('created_at', { ascending: false })
     if (data) setOrders(data)
   }
-
 
   async function addProduct() {
     if (!form.name || !form.price || !form.stock) return setMsg('Name, price and stock are required.')
@@ -127,6 +135,10 @@ export default function AdminPage() {
     dispatched: '#8B5CF6', delivered: '#10B981', cancelled: '#EF4444',
   }
 
+  if (auth === null) return (
+    <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--charcoal)' }} />
+  )
+
   if (!auth) return (
     <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--charcoal)' }}>
       <div style={{ background: 'var(--cream)', padding: '48px', borderRadius: '4px', width: '100%', maxWidth: '360px', textAlign: 'center' }}>
@@ -149,7 +161,7 @@ export default function AdminPage() {
       {/* Header */}
       <div style={{ background: 'var(--charcoal)', padding: '20px 32px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <span style={{ fontFamily: 'var(--font-script)', fontSize: '28px', color: 'var(--gold)' }}>crochetinggg — Admin</span>
-        <button onClick={() => { localStorage.removeItem('adminAuth'); setAuth(false) }} style={{ background: 'none', border: '1px solid rgba(250,247,242,0.3)', color: 'var(--cream)', padding: '6px 16px', cursor: 'pointer', fontSize: '12px', borderRadius: '4px' }}>Logout</button>
+        <button onClick={handleLogout} style={{ background: 'none', border: '1px solid rgba(250,247,242,0.3)', color: 'var(--cream)', padding: '6px 16px', cursor: 'pointer', fontSize: '12px', borderRadius: '4px' }}>Logout</button>
       </div>
 
       {/* Tabs */}

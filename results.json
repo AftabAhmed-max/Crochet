@@ -1,0 +1,1876 @@
+{
+  "config": {
+    "configFile": "C:\\Users\\siddi\\Desktop\\STACKWORK_PROJECTS\\03_DEMOS\\2-ecommerce\\crochetinggg\\playwright.config.ts",
+    "rootDir": "C:/Users/siddi/Desktop/STACKWORK_PROJECTS/03_DEMOS/2-ecommerce/crochetinggg/tests",
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "C:/Users/siddi/Desktop/STACKWORK_PROJECTS/03_DEMOS/2-ecommerce/crochetinggg/test-results",
+        "repeatEach": 1,
+        "retries": 1,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "C:/Users/siddi/Desktop/STACKWORK_PROJECTS/03_DEMOS/2-ecommerce/crochetinggg/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "html",
+        {
+          "outputFolder": "playwright-report",
+          "open": "never"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.60.0",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "crash.spec.ts",
+      "file": "crash.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "[CRITICAL] Payment integrity",
+          "file": "crash.spec.ts",
+          "line": 26,
+          "column": 6,
+          "specs": [
+            {
+              "title": "verify endpoint rejects a FORGED signature (cannot confirm a payment)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1450,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-09T18:33:38.172Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a4c18af8881e47796c6f-8093460323907c933e77",
+              "file": "crash.spec.ts",
+              "line": 27,
+              "column": 7
+            },
+            {
+              "title": "verify endpoint rejects missing payment fields",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 331,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-09T18:33:39.743Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a4c18af8881e47796c6f-911a416a133c0f640be8",
+              "file": "crash.spec.ts",
+              "line": 47,
+              "column": 7
+            },
+            {
+              "title": "order-creation endpoint rejects non-positive / non-numeric amounts",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1108,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-09T18:33:40.106Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a4c18af8881e47796c6f-b4ca72eefbd1d801f5b3",
+              "file": "crash.spec.ts",
+              "line": 55,
+              "column": 7
+            },
+            {
+              "title": "tampered client cart amount is still bound to the real total at order-create time",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1536,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-09T18:33:41.231Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a4c18af8881e47796c6f-2b57d8894410c3d018eb",
+              "file": "crash.spec.ts",
+              "line": 63,
+              "column": 7
+            }
+          ]
+        },
+        {
+          "title": "[CRITICAL] Admin auth",
+          "file": "crash.spec.ts",
+          "line": 108,
+          "column": 6,
+          "specs": [
+            {
+              "title": "login API rejects wrong password",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 257,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-09T18:33:43.372Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a4c18af8881e47796c6f-e5cab99d561de9d1b1a2",
+              "file": "crash.spec.ts",
+              "line": 109,
+              "column": 7
+            },
+            {
+              "title": "login API rejects empty / missing password",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 464,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-09T18:33:43.648Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a4c18af8881e47796c6f-d32427cf637a86a297ef",
+              "file": "crash.spec.ts",
+              "line": 115,
+              "column": 7
+            },
+            {
+              "title": "hitting /admin with no auth shows the password gate, not the dashboard",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1024,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-09T18:33:44.135Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a4c18af8881e47796c6f-c6c0c10eb3bfe6f694bf",
+              "file": "crash.spec.ts",
+              "line": 122,
+              "column": 7
+            }
+          ]
+        },
+        {
+          "title": "[CRITICAL] XSS",
+          "file": "crash.spec.ts",
+          "line": 134,
+          "column": 6,
+          "specs": [
+            {
+              "title": "checkout fields do not execute injected scripts",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1180,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-09T18:33:45.177Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a4c18af8881e47796c6f-d948238d8da975c9b726",
+              "file": "crash.spec.ts",
+              "line": 141,
+              "column": 7
+            },
+            {
+              "title": "account fields do not execute injected scripts",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2530,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-09T18:33:46.378Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a4c18af8881e47796c6f-19fe043dd85ddda0a49d",
+              "file": "crash.spec.ts",
+              "line": 165,
+              "column": 7
+            }
+          ]
+        },
+        {
+          "title": "[WARNING] Cart abuse",
+          "file": "crash.spec.ts",
+          "line": 181,
+          "column": 6,
+          "specs": [
+            {
+              "title": "huge quantity does not crash the cart",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 734,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-09T18:33:48.926Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a4c18af8881e47796c6f-9c1770322f734a60136a",
+              "file": "crash.spec.ts",
+              "line": 188,
+              "column": 7
+            },
+            {
+              "title": "zero quantity item renders without crashing",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 840,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-09T18:33:49.674Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a4c18af8881e47796c6f-84508c6f97763afc8d5b",
+              "file": "crash.spec.ts",
+              "line": 196,
+              "column": 7
+            },
+            {
+              "title": "negative quantity — does it produce a negative total? (logic probe)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 589,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "[cart negative-qty] negative total visible: true\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-09T18:33:50.535Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a4c18af8881e47796c6f-432cc993a98e1845bf73",
+              "file": "crash.spec.ts",
+              "line": 202,
+              "column": 7
+            },
+            {
+              "title": "empty-cart checkout is blocked",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 503,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-09T18:33:51.154Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a4c18af8881e47796c6f-ba9705fc541c909a1a3b",
+              "file": "crash.spec.ts",
+              "line": 213,
+              "column": 7
+            }
+          ]
+        },
+        {
+          "title": "[WARNING] Auth abuse",
+          "file": "crash.spec.ts",
+          "line": 224,
+          "column": 6,
+          "specs": [
+            {
+              "title": "wrong password is rejected with an error and no session",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1644,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-09T18:33:51.674Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a4c18af8881e47796c6f-d374229fdf780df0fa55",
+              "file": "crash.spec.ts",
+              "line": 225,
+              "column": 7
+            },
+            {
+              "title": "SQL-ish / malformed login input does not crash and does not authenticate",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2892,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-09T18:33:53.330Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a4c18af8881e47796c6f-5be888a42f6729cadb05",
+              "file": "crash.spec.ts",
+              "line": 236,
+              "column": 7
+            },
+            {
+              "title": "fresh visit to /account shows logged-out state (no leaked session)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 522,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-09T18:33:56.249Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a4c18af8881e47796c6f-59f0bc0272cb843fc45e",
+              "file": "crash.spec.ts",
+              "line": 247,
+              "column": 7
+            }
+          ]
+        },
+        {
+          "title": "[MINOR] Robustness",
+          "file": "crash.spec.ts",
+          "line": 258,
+          "column": 6,
+          "specs": [
+            {
+              "title": "non-existent route returns a 404 without a white screen",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 430,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-09T18:33:56.790Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a4c18af8881e47796c6f-0b1960608f3bf6f98859",
+              "file": "crash.spec.ts",
+              "line": 259,
+              "column": 7
+            },
+            {
+              "title": "garbage ?category value yields \"No products found\", not a crash",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2066,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-09T18:33:57.231Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a4c18af8881e47796c6f-465d0b9493d7ccd7594f",
+              "file": "crash.spec.ts",
+              "line": 267,
+              "column": 7
+            },
+            {
+              "title": "rapid double-click on Pay does not fire two order-create calls",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 22531,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-09T18:33:59.312Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a4c18af8881e47796c6f-bf2a2f3b2ba7e87785f3",
+              "file": "crash.spec.ts",
+              "line": 276,
+              "column": 7
+            },
+            {
+              "title": "oversized input is accepted without crashing checkout",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 745,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-09T18:34:21.876Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a4c18af8881e47796c6f-7e737645566352fba91b",
+              "file": "crash.spec.ts",
+              "line": 303,
+              "column": 7
+            }
+          ]
+        },
+        {
+          "title": "Console & page errors",
+          "file": "crash.spec.ts",
+          "line": 320,
+          "column": 6,
+          "specs": [
+            {
+              "title": "no uncaught JS errors on /",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3328,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-09T18:34:22.660Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a4c18af8881e47796c6f-f4d562e9de6e2c1e1681",
+              "file": "crash.spec.ts",
+              "line": 327,
+              "column": 9
+            },
+            {
+              "title": "no uncaught JS errors on /shop",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2548,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-09T18:34:26.019Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a4c18af8881e47796c6f-9e72390ae58ebcfcb781",
+              "file": "crash.spec.ts",
+              "line": 327,
+              "column": 9
+            },
+            {
+              "title": "no uncaught JS errors on /bouquet",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2915,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-09T18:34:28.597Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a4c18af8881e47796c6f-2bff0999e5393750a817",
+              "file": "crash.spec.ts",
+              "line": 327,
+              "column": 9
+            },
+            {
+              "title": "no uncaught JS errors on /about",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2358,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-09T18:34:31.525Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a4c18af8881e47796c6f-2292bb4f8e165621d674",
+              "file": "crash.spec.ts",
+              "line": 327,
+              "column": 9
+            },
+            {
+              "title": "no uncaught JS errors on /cart",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2075,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-09T18:34:33.896Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a4c18af8881e47796c6f-81d16cbd7f2866f47e36",
+              "file": "crash.spec.ts",
+              "line": 327,
+              "column": 9
+            },
+            {
+              "title": "no uncaught JS errors on /checkout",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1965,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-09T18:34:35.994Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a4c18af8881e47796c6f-19318aadd9f63f689877",
+              "file": "crash.spec.ts",
+              "line": 327,
+              "column": 9
+            },
+            {
+              "title": "no uncaught JS errors on /account",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1917,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-09T18:34:37.981Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a4c18af8881e47796c6f-7781d754ffbb15695545",
+              "file": "crash.spec.ts",
+              "line": 327,
+              "column": 9
+            },
+            {
+              "title": "no uncaught JS errors on /admin",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1959,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-09T18:34:39.910Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a4c18af8881e47796c6f-79d9fa78ee25ad869bc0",
+              "file": "crash.spec.ts",
+              "line": 327,
+              "column": 9
+            },
+            {
+              "title": "no uncaught JS errors on /order-success",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2156,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-09T18:34:41.887Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a4c18af8881e47796c6f-51501a81914e6e32a36d",
+              "file": "crash.spec.ts",
+              "line": 327,
+              "column": 9
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "functional.spec.ts",
+      "file": "functional.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Navigation",
+          "file": "functional.spec.ts",
+          "line": 56,
+          "column": 6,
+          "specs": [
+            {
+              "title": "header links route correctly and logo returns home",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 922,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-09T18:34:44.083Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "011e9001526c2e3d879a-6fe4c2d72eb763a7604b",
+              "file": "functional.spec.ts",
+              "line": 57,
+              "column": 7
+            },
+            {
+              "title": "footer quick-links route correctly",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 616,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-09T18:34:45.019Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "011e9001526c2e3d879a-c5af1341fb7d2bc3a3c8",
+              "file": "functional.spec.ts",
+              "line": 75,
+              "column": 7
+            }
+          ]
+        },
+        {
+          "title": "Pages render",
+          "file": "functional.spec.ts",
+          "line": 85,
+          "column": 6,
+          "specs": [
+            {
+              "title": "home loads",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 686,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-09T18:34:45.653Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "011e9001526c2e3d879a-812f8eddeb0c60d58825",
+              "file": "functional.spec.ts",
+              "line": 95,
+              "column": 9
+            },
+            {
+              "title": "shop loads",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 498,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-09T18:34:46.354Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "011e9001526c2e3d879a-749237e32d8708ba1b0a",
+              "file": "functional.spec.ts",
+              "line": 95,
+              "column": 9
+            },
+            {
+              "title": "bouquet loads",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 456,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-09T18:34:46.871Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "011e9001526c2e3d879a-496d1a917c8910863cda",
+              "file": "functional.spec.ts",
+              "line": 95,
+              "column": 9
+            },
+            {
+              "title": "about loads",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 447,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-09T18:34:47.340Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "011e9001526c2e3d879a-716b82cc2b0bf1bb21ce",
+              "file": "functional.spec.ts",
+              "line": 95,
+              "column": 9
+            },
+            {
+              "title": "account loads",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 403,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-09T18:34:47.796Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "011e9001526c2e3d879a-5d32b892f4d35f4c3179",
+              "file": "functional.spec.ts",
+              "line": 95,
+              "column": 9
+            },
+            {
+              "title": "admin loads",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 375,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-09T18:34:48.215Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "011e9001526c2e3d879a-af206759e038fe42ca94",
+              "file": "functional.spec.ts",
+              "line": 95,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "Shop",
+          "file": "functional.spec.ts",
+          "line": 105,
+          "column": 6,
+          "specs": [
+            {
+              "title": "products render from data",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1506,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-09T18:34:48.602Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "011e9001526c2e3d879a-f1b7c498e773709969ef",
+              "file": "functional.spec.ts",
+              "line": 106,
+              "column": 7
+            },
+            {
+              "title": "category filter via ?category= narrows the grid to that category",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2671,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-09T18:34:50.121Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "011e9001526c2e3d879a-b757049f2efcc90a1db0",
+              "file": "functional.spec.ts",
+              "line": 114,
+              "column": 7
+            },
+            {
+              "title": "clicking a category in the sidebar filters in place",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1444,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-09T18:34:52.805Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "011e9001526c2e3d879a-5eba42d77aa365133015",
+              "file": "functional.spec.ts",
+              "line": 144,
+              "column": 7
+            }
+          ]
+        },
+        {
+          "title": "Cart",
+          "file": "functional.spec.ts",
+          "line": 160,
+          "column": 6,
+          "specs": [
+            {
+              "title": "add item, update qty, remove, totals recompute correctly",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3151,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-09T18:34:54.279Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "011e9001526c2e3d879a-340aa29af0606c1b794b",
+              "file": "functional.spec.ts",
+              "line": 161,
+              "column": 7
+            }
+          ]
+        },
+        {
+          "title": "Checkout",
+          "file": "functional.spec.ts",
+          "line": 206,
+          "column": 6,
+          "specs": [
+            {
+              "title": "reaches Razorpay step and the amount sent matches the cart total",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 1014,
+                      "error": {
+                        "message": "Error: No addable (in-stock) product card found on /shop",
+                        "stack": "Error: No addable (in-stock) product card found on /shop\n    at firstAddableProduct (C:\\Users\\siddi\\Desktop\\STACKWORK_PROJECTS\\03_DEMOS\\2-ecommerce\\crochetinggg\\tests\\functional.spec.ts:51:9)\n    at C:\\Users\\siddi\\Desktop\\STACKWORK_PROJECTS\\03_DEMOS\\2-ecommerce\\crochetinggg\\tests\\functional.spec.ts:211:31",
+                        "location": {
+                          "file": "C:\\Users\\siddi\\Desktop\\STACKWORK_PROJECTS\\03_DEMOS\\2-ecommerce\\crochetinggg\\tests\\functional.spec.ts",
+                          "column": 9,
+                          "line": 51
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 49 |\u001b[39m     }\n \u001b[90m 50 |\u001b[39m   }\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 51 |\u001b[39m   \u001b[36mthrow\u001b[39m \u001b[36mnew\u001b[39m \u001b[33mError\u001b[39m(\u001b[32m'No addable (in-stock) product card found on /shop'\u001b[39m)\n \u001b[90m    |\u001b[39m         \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 52 |\u001b[39m }\n \u001b[90m 53 |\u001b[39m\n \u001b[90m 54 |\u001b[39m \u001b[90m// --- Navigation ------------------------------------------------------------\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "C:\\Users\\siddi\\Desktop\\STACKWORK_PROJECTS\\03_DEMOS\\2-ecommerce\\crochetinggg\\tests\\functional.spec.ts",
+                            "column": 9,
+                            "line": 51
+                          },
+                          "message": "Error: No addable (in-stock) product card found on /shop\n\n  49 |     }\n  50 |   }\n> 51 |   throw new Error('No addable (in-stock) product card found on /shop')\n     |         ^\n  52 | }\n  53 |\n  54 | // --- Navigation ------------------------------------------------------------\n    at firstAddableProduct (C:\\Users\\siddi\\Desktop\\STACKWORK_PROJECTS\\03_DEMOS\\2-ecommerce\\crochetinggg\\tests\\functional.spec.ts:51:9)\n    at C:\\Users\\siddi\\Desktop\\STACKWORK_PROJECTS\\03_DEMOS\\2-ecommerce\\crochetinggg\\tests\\functional.spec.ts:211:31"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-09T18:34:57.455Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\siddi\\Desktop\\STACKWORK_PROJECTS\\03_DEMOS\\2-ecommerce\\crochetinggg\\test-results\\functional-Checkout-reache-9ee90-sent-matches-the-cart-total-chromium\\test-failed-1.png"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "C:\\Users\\siddi\\Desktop\\STACKWORK_PROJECTS\\03_DEMOS\\2-ecommerce\\crochetinggg\\test-results\\functional-Checkout-reache-9ee90-sent-matches-the-cart-total-chromium\\error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "C:\\Users\\siddi\\Desktop\\STACKWORK_PROJECTS\\03_DEMOS\\2-ecommerce\\crochetinggg\\tests\\functional.spec.ts",
+                        "column": 9,
+                        "line": 51
+                      }
+                    },
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 4332,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 1,
+                      "startTime": "2026-06-09T18:35:00.833Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Users\\siddi\\Desktop\\STACKWORK_PROJECTS\\03_DEMOS\\2-ecommerce\\crochetinggg\\test-results\\functional-Checkout-reache-9ee90-sent-matches-the-cart-total-chromium-retry1\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "flaky"
+                }
+              ],
+              "id": "011e9001526c2e3d879a-827d82b8028ae45a7a58",
+              "file": "functional.spec.ts",
+              "line": 207,
+              "column": 7
+            },
+            {
+              "title": "empty cart cannot check out",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 955,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-09T18:35:06.747Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "011e9001526c2e3d879a-9f07b7669ac4e20edc75",
+              "file": "functional.spec.ts",
+              "line": 254,
+              "column": 7
+            }
+          ]
+        },
+        {
+          "title": "User account",
+          "file": "functional.spec.ts",
+          "line": 263,
+          "column": 6,
+          "specs": [
+            {
+              "title": "login with real credentials, see account, then logout",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3023,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-09T18:35:07.745Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "011e9001526c2e3d879a-e9cf3fa9bf0e3a501007",
+              "file": "functional.spec.ts",
+              "line": 264,
+              "column": 7
+            }
+          ]
+        },
+        {
+          "title": "Admin",
+          "file": "functional.spec.ts",
+          "line": 284,
+          "column": 6,
+          "specs": [
+            {
+              "title": "password-only login shows dashboard with products and orders",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1506,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-09T18:35:10.799Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "011e9001526c2e3d879a-b4b96f79d0b57417b36e",
+              "file": "functional.spec.ts",
+              "line": 285,
+              "column": 7
+            }
+          ]
+        },
+        {
+          "title": "Responsive @375px",
+          "file": "functional.spec.ts",
+          "line": 310,
+          "column": 6,
+          "specs": [
+            {
+              "title": "hamburger reveals nav links; layout intact",
+              "ok": true,
+              "tags": [
+                "375px"
+              ],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 899,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-09T18:35:12.331Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "011e9001526c2e3d879a-cc37f48a7debb5543785",
+              "file": "functional.spec.ts",
+              "line": 312,
+              "column": 7
+            },
+            {
+              "title": "shop renders in a single column on mobile",
+              "ok": true,
+              "tags": [
+                "375px"
+              ],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2034,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-09T18:35:13.262Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "011e9001526c2e3d879a-f1be8f7521f18fa584ae",
+              "file": "functional.spec.ts",
+              "line": 327,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-06-09T18:33:36.331Z",
+    "duration": 99436.185,
+    "expected": 46,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 1
+  }
+}

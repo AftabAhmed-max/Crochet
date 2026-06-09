@@ -55,7 +55,7 @@ export default function CheckoutPage() {
       const res = await fetch('/api/razorpay', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ amount: total }),
+        body: JSON.stringify({ items: items.map(i => ({ id: i.id, qty: i.qty })) }),
       })
       const order = await res.json()
       if (!order.id) {
@@ -89,9 +89,6 @@ export default function CheckoutPage() {
                   razorpay_signature: response.razorpay_signature,
                   customerData: form,
                   items,
-                  subtotal,
-                  shipping,
-                  total,
                 }),
               })
               const verifyData = await verifyRes.json()
@@ -101,18 +98,6 @@ export default function CheckoutPage() {
                 setLoading(false)
                 return
               }
-
-              await fetch('/api/send-email', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                  name: form.name,
-                  email: form.email,
-                  items,
-                  total,
-                  orderId: verifyData.orderId,
-                }),
-              })
 
               clearCart()
               router.push('/order-success')
