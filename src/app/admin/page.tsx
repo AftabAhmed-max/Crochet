@@ -48,6 +48,8 @@ export default function AdminPage() {
       const data = await res.json()
       if (data.success) {
         setAuth(true)
+      } else if (res.status === 429) {
+        setMsg(data.error || 'Too many attempts. Please try again later.')
       } else {
         setMsg('Wrong password')
       }
@@ -59,6 +61,8 @@ export default function AdminPage() {
 
   async function handleLogout() {
     await fetch('/api/admin/logout', { method: 'POST' })
+    setPass('')
+    setMsg('')
     setAuth(false)
   }
 
@@ -146,7 +150,7 @@ export default function AdminPage() {
         <p style={{ fontSize: '12px', letterSpacing: '2px', textTransform: 'uppercase', color: 'var(--brown-soft)', margin: '16px 0 24px' }}>Enter Password</p>
         <input type="password" value={pass} onChange={e => setPass(e.target.value)}
           onKeyDown={e => { if (e.key === 'Enter') handleLogin() }}
-          style={inputStyle} placeholder="Password" />
+          style={inputStyle} placeholder="Password" autoComplete="off" />
         {msg && <p style={{ color: '#EF4444', fontSize: '13px', marginTop: '12px' }}>{msg}</p>}
         <button className="btn-primary" style={{ width: '100%', marginTop: '16px' }}
           onClick={handleLogin} disabled={loginLoading}>
