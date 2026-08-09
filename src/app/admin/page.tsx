@@ -16,7 +16,7 @@ type Order = {
   items: OrderItem[]
 }
 
-const categories = ['Bouquet', 'Amigurumi', 'Home Décor', 'Custom']
+const categories = ['Bouquet', 'Keychains', 'Home Décor', 'Accessories', 'Custom']
 const statuses = ['pending', 'confirmed', 'dispatched', 'delivered', 'cancelled']
 
 export default function AdminPage() {

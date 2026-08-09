@@ -1,7 +1,7 @@
 import Hero from '@/components/Hero'
 import BestProducts from '@/components/BestProducts'
 import Categories from '@/components/Categories'
-import Testimonials from '@/components/Testimonials'
+// import Testimonials from '@/components/Testimonials'
 import Footer from '@/components/Footer'
 
 export default function Home() {
@@ -10,7 +10,7 @@ export default function Home() {
       <Hero />
       <BestProducts />
       <Categories />
-      <Testimonials />
+      {/* <Testimonials /> */}
       <Footer />
     </main>
   )

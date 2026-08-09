@@ -10,9 +10,10 @@ const values = [
 ]
 
 const team = [
-  { name: 'Aisha K.', role: 'Founder & Lead Crafter' },
-  { name: 'Priya M.', role: 'Design & Custom Orders' },
-  { name: 'Riya S.', role: 'Packaging & Dispatch' },
+  { name: 'Needa Shaikh', role: 'Founder & Lead Crochet Artist' },
+  { name: 'Zainab Shaikh', role: 'Crochet Artist & Creative Partner' },
+  { name: 'Anas Shaikh & Shakil Shaikh', role: 'Events & Business Strategists' },
+  { name: 'Anam Siddiqui', role: 'Content Creator' },
 ]
 
 export default function AboutPage() {
@@ -41,7 +42,7 @@ export default function AboutPage() {
         </div>
         <div style={{ position: 'relative', width: '100%', minHeight: '400px' }}>
           <Image
-            src="https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=800&q=80"
+            src="/about.jpeg"
             alt="Our Story"
             fill
             sizes="(max-width: 768px) 100vw, 50vw"

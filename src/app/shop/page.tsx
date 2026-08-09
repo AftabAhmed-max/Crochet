@@ -7,7 +7,7 @@ import { useSearchParams } from 'next/navigation'
 import { Suspense } from 'react'
 import Image from 'next/image'
 
-const categories = ['All', 'Bouquet', 'Amigurumi', 'Home Décor', 'Custom']
+const categories = ['All', 'Bouquet', 'Keychains', 'Home Décor', 'Accessories', 'Custom']
 
 type Product = {
   id: number; name: string; category: string;

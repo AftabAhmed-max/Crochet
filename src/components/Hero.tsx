@@ -150,7 +150,7 @@ export default function Hero() {
           alignItems: 'center',
         }}>
           <Image
-            src="https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?w=800&q=80"
+            src="/hero.jpeg"
             alt="Crochet Bouquet"
             width={460}
             height={614}

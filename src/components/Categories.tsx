@@ -10,11 +10,11 @@ const categories = [
     bg: '#F5EFE6',
   },
   {
-    name: 'Amigurumi',
-    description: 'Cute handcrafted stuffed toys',
-    emoji: '🧸',
+    name: 'Keychains',
+    description: 'Cute handcrafted keychains',
+    emoji: '🔑',
     count: '18 designs',
-    href: '/shop?category=Amigurumi',
+    href: '/shop?category=Keychains',
     bg: '#EEF0F5',
   },
   {
@@ -26,12 +26,20 @@ const categories = [
     bg: '#F0EEF5',
   },
   {
+    name: 'Accessories',
+    description: 'Handcrafted wearable pieces',
+    emoji: '✨',
+    count: '10 designs',
+    href: '/shop?category=Accessories',
+    bg: '#F5EEF0',
+  },
+  {
     name: 'Custom Orders',
     description: 'Your dream, our craft',
-    emoji: '✨',
+    emoji: '🎨',
     count: 'Unlimited',
     href: '/shop?category=Custom',
-    bg: '#F5EEF0',
+    bg: '#EFF5EE',
   },
 ]
 
