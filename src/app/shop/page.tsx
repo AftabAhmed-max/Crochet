@@ -15,22 +15,72 @@ type Product = {
   images: string[] | null; description: string | null;
 }
 
-function ShopDescription({ text }: { text: string }) {
-  const [expanded, setExpanded] = useState(false)
-  const isLong = text.length > 80
+function ProductOverlay({ product, onClose }: { product: Product; onClose: () => void }) {
+  useEffect(() => {
+    document.body.style.overflow = 'hidden'
+    return () => { document.body.style.overflow = '' }
+  }, [])
+
   return (
-    <div style={{ fontSize: '12px', color: 'var(--brown-soft)', lineHeight: 1.6, marginBottom: '4px' }}>
-      {isLong && !expanded ? (
-        <>
-          {text.slice(0, 80)}...
-          <button onClick={() => setExpanded(true)} style={{ background: 'none', border: 'none', color: 'var(--gold-dark)', cursor: 'pointer', fontSize: '12px', padding: '0 4px' }}>View More</button>
-        </>
-      ) : (
-        <>
-          {text}
-          {isLong && <button onClick={() => setExpanded(false)} style={{ background: 'none', border: 'none', color: 'var(--gold-dark)', cursor: 'pointer', fontSize: '12px', padding: '0 4px' }}>View Less</button>}
-        </>
-      )}
+    <div
+      onClick={onClose}
+      style={{
+        position: 'fixed', inset: 0, zIndex: 999,
+        background: 'rgba(0,0,0,0.7)',
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+        padding: '24px',
+      }}
+    >
+      <div
+        onClick={e => e.stopPropagation()}
+        style={{
+          background: 'var(--cream)', borderRadius: '8px',
+          maxWidth: '780px', width: '100%', maxHeight: '90vh',
+          overflow: 'auto', position: 'relative',
+          display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+        }}
+      >
+        {/* Close button */}
+        <button
+          onClick={onClose}
+          style={{
+            position: 'absolute', top: '16px', right: '16px', zIndex: 10,
+            background: 'var(--charcoal)', color: 'var(--cream)',
+            border: 'none', borderRadius: '50%',
+            width: '32px', height: '32px', fontSize: '18px',
+            cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
+          }}
+        >×</button>
+
+        {/* Image */}
+        <div style={{ position: 'relative', minHeight: '300px', background: 'var(--cream-dark)' }}>
+          {product.images?.[0] ? (
+            <Image src={product.images[0]} alt={product.name} fill style={{ objectFit: 'cover' }} sizes="50vw" />
+          ) : (
+            <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <span style={{ fontFamily: 'var(--font-script)', fontSize: '24px', color: 'rgba(201,169,110,0.4)' }}>photo</span>
+            </div>
+          )}
+          {product.tag && (
+            <span style={{
+              position: 'absolute', top: '12px', left: '12px',
+              background: 'var(--charcoal)', color: 'var(--cream)',
+              fontSize: '10px', letterSpacing: '1.5px', textTransform: 'uppercase', padding: '4px 10px',
+            }}>{product.tag}</span>
+          )}
+        </div>
+
+        {/* Details */}
+        <div style={{ padding: '32px' }}>
+          <p style={{ fontSize: '10px', letterSpacing: '2px', textTransform: 'uppercase', color: 'var(--gold)', marginBottom: '8px' }}>{product.category}</p>
+          <h2 style={{ fontFamily: 'var(--font-display)', fontSize: '24px', color: 'var(--charcoal)', marginBottom: '16px' }}>{product.name}</h2>
+          {product.description && (
+            <p style={{ fontSize: '14px', color: 'var(--brown-soft)', lineHeight: 1.8, marginBottom: '24px' }}>{product.description}</p>
+          )}
+          <p style={{ fontFamily: 'var(--font-display)', fontSize: '28px', color: 'var(--charcoal)', marginBottom: '24px' }}>₹ {product.price}</p>
+          <AddToCartButton item={product} />
+        </div>
+      </div>
     </div>
   )
 }
@@ -41,8 +91,10 @@ function ShopContent() {
   const [maxPrice, setMaxPrice] = useState(1500)
   const [sort, setSort] = useState('default')
   const [isMobile, setIsMobile] = useState(false)
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null)
   const searchParams = useSearchParams()
   const [activeCategory, setActiveCategory] = useState(searchParams.get('category') || 'All')
+
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 768)
     check()
@@ -52,7 +104,7 @@ function ShopContent() {
 
   useEffect(() => {
     async function fetchProducts() {
-      const { data } = await supabase.from('products').select('*').order('created_at', { ascending: false })  
+      const { data } = await supabase.from('products').select('*').order('created_at', { ascending: false })
       if (data) setProducts(data)
       setLoading(false)
     }
@@ -67,6 +119,10 @@ function ShopContent() {
 
   return (
     <>
+      {selectedProduct && (
+        <ProductOverlay product={selectedProduct} onClose={() => setSelectedProduct(null)} />
+      )}
+
       <div style={{ background: 'var(--charcoal)', padding: '48px 24px', textAlign: 'center' }}>
         <p style={{ fontSize: '11px', letterSpacing: '3px', textTransform: 'uppercase', color: 'var(--gold)', marginBottom: '10px' }}>Explore</p>
         <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(32px, 5vw, 56px)', color: 'var(--cream)' }}>Our Shop</h1>
@@ -136,12 +192,16 @@ function ShopContent() {
           {filtered.map((p, i) => (
             <div key={p.id} className={`fade-up fade-up-${Math.min(i + 1, 4)}`} style={{
               background: 'var(--white)', border: '1px solid var(--cream-dark)',
-              borderRadius: '4px', overflow: 'hidden', cursor: 'pointer', transition: 'transform 0.3s',
+              borderRadius: '4px', overflow: 'hidden', transition: 'transform 0.3s',
             }}
               onMouseEnter={e => (e.currentTarget.style.transform = 'translateY(-4px)')}
               onMouseLeave={e => (e.currentTarget.style.transform = 'translateY(0)')}
             >
-              <div style={{ width: '100%', aspectRatio: '1/1', position: 'relative', overflow: 'hidden' }}>
+              {/* Image — clickable */}
+              <div
+                onClick={() => setSelectedProduct(p)}
+                style={{ width: '100%', aspectRatio: '1/1', position: 'relative', overflow: 'hidden', cursor: 'pointer' }}
+              >
                 {p.images?.[0] ? (
                   <Image src={p.images[0]} alt={p.name} fill style={{ objectFit: 'cover' }} sizes="(max-width: 768px) 100vw, 25vw" />
                 ) : (
@@ -151,11 +211,23 @@ function ShopContent() {
                 )}
                 {p.tag && <span style={{ position: 'absolute', top: '12px', left: '12px', background: 'var(--charcoal)', color: 'var(--cream)', fontSize: '10px', letterSpacing: '1.5px', textTransform: 'uppercase', padding: '4px 10px' }}>{p.tag}</span>}
               </div>
+
               <div style={{ padding: '16px' }}>
                 <p style={{ fontSize: '10px', letterSpacing: '1.5px', textTransform: 'uppercase', color: 'var(--gold)', marginBottom: '4px' }}>{p.category}</p>
-                <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '16px', color: 'var(--charcoal)', marginBottom: '8px' }}>{p.name}</h3>
-                {p.description && <ShopDescription text={p.description} />}
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '12px' }}>
+
+                {/* Title + description — clickable */}
+                <div onClick={() => setSelectedProduct(p)} style={{ cursor: 'pointer', marginBottom: '12px' }}>
+                  <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '16px', color: 'var(--charcoal)', marginBottom: '6px' }}>{p.name}</h3>
+                  {p.description && (
+                    <p style={{
+                      fontSize: '12px', color: 'var(--brown-soft)', lineHeight: 1.6,
+                      display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical',
+                      overflow: 'hidden',
+                    }}>{p.description}</p>
+                  )}
+                </div>
+
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <span style={{ fontWeight: 500 }}>₹ {p.price}</span>
                   <AddToCartButton item={p} small />
                 </div>
@@ -170,5 +242,5 @@ function ShopContent() {
 }
 
 export default function ShopPage() {
-  return <Suspense fallback={<div style={{padding:'80px',textAlign:'center',color:'var(--brown-soft)'}}>Loading...</div>}><ShopContent /></Suspense>
+  return <Suspense fallback={<div style={{ padding: '80px', textAlign: 'center', color: 'var(--brown-soft)' }}>Loading...</div>}><ShopContent /></Suspense>
 }
