@@ -16,6 +16,7 @@ type Order = {
   items: OrderItem[]
 }
 
+
 const categories = ['Bouquet', 'Keychains', 'Home Décor', 'Accessories', 'Custom']
 const statuses = ['pending', 'confirmed', 'dispatched', 'delivered', 'cancelled']
 
@@ -29,6 +30,7 @@ export default function AdminPage() {
   const [loginLoading, setLoginLoading] = useState(false)
   const [form, setForm] = useState({ name: '', category: 'Bouquet', price: '', stock: '', tag: '', description: '' })
   const [msg, setMsg] = useState('')
+  const [editingId, setEditingId] = useState<number | null>(null)
   const [imageFile, setImageFile] = useState<File | null>(null)
 
   useEffect(() => {
@@ -86,7 +88,7 @@ export default function AdminPage() {
   }
 
   async function addProduct() {
-    if (!form.name || !form.price || !form.stock) return setMsg('Name, price and stock are required.')
+    if (!form.name || !form.price || !form.stock) return setMsg('Error: Name, price and stock are required.')
     setLoading(true)
     let imageUrl = null
 
@@ -100,15 +102,53 @@ export default function AdminPage() {
       }
     }
 
-    const { error } = await supabase.from('products').insert({
-      name: form.name, category: form.category,
-      price: Number(form.price), stock: Number(form.stock),
-      tag: form.tag || null, description: form.description || null,
-      images: imageUrl ? [imageUrl] : [],
-    })
-    if (error) setMsg('Error adding product.')
-    else { setMsg('Product added successfully!'); setForm({ name: '', category: 'Bouquet', price: '', stock: '', tag: '', description: '' }); setImageFile(null); fetchProducts() }
+      if (editingId !== null) {
+        const updateData: Record<string, unknown> = {
+          name: form.name, category: form.category,
+          price: Number(form.price), stock: Number(form.stock),
+          tag: form.tag || null, description: form.description || null,
+      }
+      if (imageUrl) updateData.images = [imageUrl]
+      const { error } = await supabase.from('products').update(updateData).eq('id', editingId)
+      if (error) setMsg('Error updating product.')
+      else {
+        setMsg('Product updated!')
+        setEditingId(null)
+        setForm({ name: '', category: 'Bouquet', price: '', stock: '', tag: '', description: '' })
+        setImageFile(null)
+        fetchProducts()
+      }
+    } else {
+      const { error } = await supabase.from('products').insert({
+        name: form.name, category: form.category,
+        price: Number(form.price), stock: Number(form.stock),
+        tag: form.tag || null, description: form.description || null,
+        images: imageUrl ? [imageUrl] : [],
+      })
+      if (error) setMsg('Error adding product.')
+      else {
+        setMsg('Product added!')
+        setForm({ name: '', category: 'Bouquet', price: '', stock: '', tag: '', description: '' })
+        setImageFile(null)
+        fetchProducts()
+      }
+    }
     setLoading(false)
+  }
+
+  function startEdit(p: Product) {
+    setEditingId(p.id)
+    setForm({
+      name: p.name,
+      category: p.category,
+      price: String(p.price),
+      stock: String(p.stock),
+      tag: p.tag || '',
+      description: p.description || '',
+    })
+    setImageFile(null)
+    setMsg('')
+    window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
   async function deleteProduct(id: number) {
@@ -188,7 +228,9 @@ export default function AdminPage() {
           <>
             {/* Add Product Form */}
             <div style={{ background: 'var(--white)', border: '1px solid var(--cream-dark)', borderRadius: '4px', padding: '28px', marginBottom: '40px' }}>
-              <p style={{ fontSize: '11px', letterSpacing: '2px', textTransform: 'uppercase', color: 'var(--gold)', marginBottom: '20px' }}>Add New Product</p>
+              <p style={{ fontSize: '11px', letterSpacing: '2px', textTransform: 'uppercase', color: 'var(--gold)', marginBottom: '20px' }}>
+                {editingId !== null ? 'Editing Product' : 'Add New Product'}
+              </p>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '12px', marginBottom: '12px' }}>
                 <input style={inputStyle} placeholder="Product name*" value={form.name} onChange={e => setForm(p => ({ ...p, name: e.target.value }))} />
                 <select style={inputStyle} value={form.category} onChange={e => setForm(p => ({ ...p, category: e.target.value }))}>
@@ -215,9 +257,25 @@ export default function AdminPage() {
                     style={{ display: 'none' }} />
                 </label>
               </div>
-              <button className="btn-primary" onClick={addProduct} disabled={loading}>
-                {loading ? 'Adding...' : 'Add Product'}
-              </button>
+              <div style={{ display: 'flex', gap: '12px', alignItems: 'center', flexWrap: 'wrap' }}>
+                <button className="btn-primary" onClick={addProduct} disabled={loading || editingId !== null}>
+                  {loading && editingId === null ? 'Adding...' : 'Add Product'}
+                </button>
+                {editingId !== null && (
+                  <>
+                    <button className="btn-primary" onClick={addProduct} disabled={loading}
+                      style={{ background: 'var(--gold-dark)' }}>
+                      {loading ? 'Saving...' : 'Save Changes'}
+                    </button>
+                    <button className="btn-outline" onClick={() => {
+                      setEditingId(null)
+                      setForm({ name: '', category: 'Bouquet', price: '', stock: '', tag: '', description: '' })
+                      setImageFile(null)
+                      setMsg('')
+                    }}>Cancel</button>
+                  </>
+                )}
+              </div>
             </div>
 
             {/* Products Table */}
@@ -226,7 +284,7 @@ export default function AdminPage() {
                 <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '14px' }}>
                   <thead>
                     <tr style={{ background: 'var(--cream-dark)' }}>
-                      {['Name', 'Category', 'Price', 'Stock', 'Tag', 'Actions'].map(h => (
+                      {['Name', 'Category', 'Price', 'Stock', 'Tag', 'Description', 'Actions'].map(h => (
                         <th key={h} style={{ padding: '12px 16px', textAlign: 'left', fontSize: '11px', letterSpacing: '1.5px', textTransform: 'uppercase', color: 'var(--brown-soft)' }}>{h}</th>
                       ))}
                     </tr>
@@ -246,10 +304,14 @@ export default function AdminPage() {
                               style={{ width: '24px', height: '24px', border: '1px solid var(--cream-dark)', background: 'var(--cream)', borderRadius: '50%', cursor: 'pointer', fontSize: '14px' }}>+</button>
                           </div>
                         </td>
-                        <td style={{ padding: '12px 16px', fontSize: '12px', color: 'var(--brown-soft)' }}>{p.tag || '—'}</td>
+                        <td style={{ padding: '12px 16px', fontSize: '12px', color: 'var(--brown-soft)', maxWidth: '200px' }}>{p.description || '—'}</td>
                         <td style={{ padding: '12px 16px' }}>
-                          <button onClick={() => deleteProduct(p.id)}
-                            style={{ background: 'none', border: '1px solid #EF4444', color: '#EF4444', padding: '4px 12px', borderRadius: '4px', cursor: 'pointer', fontSize: '12px' }}>Delete</button>
+                          <div style={{ display: 'flex', gap: '8px' }}>
+                            <button onClick={() => startEdit(p)}
+                              style={{ background: 'none', border: '1px solid var(--gold)', color: 'var(--gold-dark)', padding: '4px 12px', borderRadius: '4px', cursor: 'pointer', fontSize: '12px' }}>Edit</button>
+                            <button onClick={() => deleteProduct(p.id)}
+                              style={{ background: 'none', border: '1px solid #EF4444', color: '#EF4444', padding: '4px 12px', borderRadius: '4px', cursor: 'pointer', fontSize: '12px' }}>Delete</button>
+                          </div>
                         </td>
                       </tr>
                     ))}
