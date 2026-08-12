@@ -164,36 +164,6 @@ export default function Hero() {
               border: '1px solid rgba(201,169,110,0.2)',
             }}
           />
-
-          {/* Floating tag */}
-          <div style={{
-            position: 'absolute',
-            bottom: '40px',
-            left: '-20px',
-            background: 'var(--cream)',
-            padding: '14px 20px',
-            borderRadius: '4px',
-            boxShadow: '0 8px 32px rgba(0,0,0,0.3)',
-          }}>
-            <p style={{
-              fontSize: '11px',
-              letterSpacing: '1.5px',
-              textTransform: 'uppercase',
-              color: 'var(--brown-soft)',
-              marginBottom: '4px',
-            }}>New Arrival</p>
-            <p style={{
-              fontFamily: 'var(--font-display)',
-              fontSize: '16px',
-              color: 'var(--charcoal)',
-            }}>Spring Bouquet</p>
-            <p style={{
-              color: 'var(--gold-dark)',
-              fontSize: '14px',
-              marginTop: '4px',
-              fontWeight: 500,
-            }}>₹ 899</p>
-          </div>
         </div>
 
       </div>
