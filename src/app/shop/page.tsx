@@ -12,7 +12,27 @@ const categories = ['All', 'Bouquet', 'Keychains', 'Home Décor', 'Accessories',
 type Product = {
   id: number; name: string; category: string;
   price: number; stock: number; tag: string | null;
-  images: string[] | null;
+  images: string[] | null; description: string | null;
+}
+
+function ShopDescription({ text }: { text: string }) {
+  const [expanded, setExpanded] = useState(false)
+  const isLong = text.length > 80
+  return (
+    <div style={{ fontSize: '12px', color: 'var(--brown-soft)', lineHeight: 1.6, marginBottom: '4px' }}>
+      {isLong && !expanded ? (
+        <>
+          {text.slice(0, 80)}...
+          <button onClick={() => setExpanded(true)} style={{ background: 'none', border: 'none', color: 'var(--gold-dark)', cursor: 'pointer', fontSize: '12px', padding: '0 4px' }}>View More</button>
+        </>
+      ) : (
+        <>
+          {text}
+          {isLong && <button onClick={() => setExpanded(false)} style={{ background: 'none', border: 'none', color: 'var(--gold-dark)', cursor: 'pointer', fontSize: '12px', padding: '0 4px' }}>View Less</button>}
+        </>
+      )}
+    </div>
+  )
 }
 
 function ShopContent() {
@@ -133,8 +153,9 @@ function ShopContent() {
               </div>
               <div style={{ padding: '16px' }}>
                 <p style={{ fontSize: '10px', letterSpacing: '1.5px', textTransform: 'uppercase', color: 'var(--gold)', marginBottom: '4px' }}>{p.category}</p>
-                <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '16px', color: 'var(--charcoal)', marginBottom: '12px' }}>{p.name}</h3>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '16px', color: 'var(--charcoal)', marginBottom: '8px' }}>{p.name}</h3>
+                {p.description && <ShopDescription text={p.description} />}
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '12px' }}>
                   <span style={{ fontWeight: 500 }}>₹ {p.price}</span>
                   <AddToCartButton item={p} small />
                 </div>

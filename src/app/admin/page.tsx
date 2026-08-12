@@ -1,8 +1,9 @@
 'use client'
 import { useState, useEffect } from 'react'
 import { supabase } from '@/lib/supabase'
+import Image from 'next/image'
 
-type Product = { id: number; name: string; category: string; price: number; stock: number; tag: string | null; description: string | null }
+type Product = { id: number; name: string; category: string; price: number; stock: number; tag: string | null; description: string | null; images: string[] | null }
 type OrderItem = { name: string; qty: number; price: number }
 type Order = {
   id: number
@@ -16,12 +17,32 @@ type Order = {
   items: OrderItem[]
 }
 
-
 const categories = ['Bouquet', 'Keychains', 'Home Décor', 'Accessories', 'Custom']
 const statuses = ['pending', 'confirmed', 'dispatched', 'delivered', 'cancelled']
 
+function DescriptionCell({ text }: { text: string | null }) {
+  const [expanded, setExpanded] = useState(false)
+  if (!text || text === '—') return <span style={{ color: 'var(--brown-soft)', fontSize: '12px' }}>—</span>
+  const isLong = text.length > 80
+  return (
+    <div style={{ fontSize: '12px', color: 'var(--brown-soft)', maxWidth: '200px' }}>
+      {isLong && !expanded ? (
+        <>
+          {text.slice(0, 80)}...
+          <button onClick={() => setExpanded(true)} style={{ background: 'none', border: 'none', color: 'var(--gold-dark)', cursor: 'pointer', fontSize: '12px', padding: '0 4px' }}>View More</button>
+        </>
+      ) : (
+        <>
+          {text}
+          {isLong && <button onClick={() => setExpanded(false)} style={{ background: 'none', border: 'none', color: 'var(--gold-dark)', cursor: 'pointer', fontSize: '12px', padding: '0 4px' }}>View Less</button>}
+        </>
+      )}
+    </div>
+  )
+}
+
 export default function AdminPage() {
-  const [auth, setAuth] = useState<boolean | null>(null) // null = loading
+  const [auth, setAuth] = useState<boolean | null>(null)
   const [pass, setPass] = useState('')
   const [tab, setTab] = useState<'products' | 'orders'>('products')
   const [products, setProducts] = useState<Product[]>([])
@@ -31,6 +52,7 @@ export default function AdminPage() {
   const [form, setForm] = useState({ name: '', category: 'Bouquet', price: '', stock: '', tag: '', description: '' })
   const [msg, setMsg] = useState('')
   const [editingId, setEditingId] = useState<number | null>(null)
+  const [editingProduct, setEditingProduct] = useState<Product | null>(null)
   const [imageFile, setImageFile] = useState<File | null>(null)
 
   useEffect(() => {
@@ -48,13 +70,9 @@ export default function AdminPage() {
         body: JSON.stringify({ password: pass }),
       })
       const data = await res.json()
-      if (data.success) {
-        setAuth(true)
-      } else if (res.status === 429) {
-        setMsg(data.error || 'Too many attempts. Please try again later.')
-      } else {
-        setMsg('Wrong password')
-      }
+      if (data.success) setAuth(true)
+      else if (res.status === 429) setMsg(data.error || 'Too many attempts. Please try again later.')
+      else setMsg('Wrong password')
     } catch {
       setMsg('Login failed. Please try again.')
     }
@@ -63,15 +81,12 @@ export default function AdminPage() {
 
   async function handleLogout() {
     await fetch('/api/admin/logout', { method: 'POST' })
-    setPass('')
-    setMsg('')
-    setAuth(false)
+    setPass(''); setMsg(''); setAuth(false)
   }
 
   useEffect(() => {
     if (auth) {
-      fetchProducts()
-      fetchOrders()
+      fetchProducts(); fetchOrders()
       const interval = setInterval(fetchOrders, 30000)
       return () => clearInterval(interval)
     }
@@ -90,7 +105,7 @@ export default function AdminPage() {
   async function addProduct() {
     if (!form.name || !form.price || !form.stock) return setMsg('Error: Name, price and stock are required.')
     setLoading(true)
-    let imageUrl = null
+    let imageUrl: string | null = null
 
     if (imageFile) {
       const ext = imageFile.name.split('.').pop()
@@ -102,21 +117,22 @@ export default function AdminPage() {
       }
     }
 
-      if (editingId !== null) {
-        const updateData: Record<string, unknown> = {
-          name: form.name, category: form.category,
-          price: Number(form.price), stock: Number(form.stock),
-          tag: form.tag || null, description: form.description || null,
+    if (editingId !== null) {
+      // Keep existing image if no new image selected
+      const existingImages = editingProduct?.images || []
+      const updateData: Record<string, unknown> = {
+        name: form.name, category: form.category,
+        price: Number(form.price), stock: Number(form.stock),
+        tag: form.tag || null, description: form.description || null,
+        images: imageUrl ? [imageUrl] : existingImages,
       }
-      if (imageUrl) updateData.images = [imageUrl]
       const { error } = await supabase.from('products').update(updateData).eq('id', editingId)
       if (error) setMsg('Error updating product.')
       else {
         setMsg('Product updated!')
-        setEditingId(null)
+        setEditingId(null); setEditingProduct(null)
         setForm({ name: '', category: 'Bouquet', price: '', stock: '', tag: '', description: '' })
-        setImageFile(null)
-        fetchProducts()
+        setImageFile(null); fetchProducts()
       }
     } else {
       const { error } = await supabase.from('products').insert({
@@ -129,8 +145,7 @@ export default function AdminPage() {
       else {
         setMsg('Product added!')
         setForm({ name: '', category: 'Bouquet', price: '', stock: '', tag: '', description: '' })
-        setImageFile(null)
-        fetchProducts()
+        setImageFile(null); fetchProducts()
       }
     }
     setLoading(false)
@@ -138,17 +153,20 @@ export default function AdminPage() {
 
   function startEdit(p: Product) {
     setEditingId(p.id)
+    setEditingProduct(p)
     setForm({
-      name: p.name,
-      category: p.category,
-      price: String(p.price),
-      stock: String(p.stock),
-      tag: p.tag || '',
-      description: p.description || '',
+      name: p.name, category: p.category,
+      price: String(p.price), stock: String(p.stock),
+      tag: p.tag || '', description: p.description || '',
     })
-    setImageFile(null)
-    setMsg('')
+    setImageFile(null); setMsg('')
     window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
+  function cancelEdit() {
+    setEditingId(null); setEditingProduct(null)
+    setForm({ name: '', category: 'Bouquet', price: '', stock: '', tag: '', description: '' })
+    setImageFile(null); setMsg('')
   }
 
   async function deleteProduct(id: number) {
@@ -202,13 +220,11 @@ export default function AdminPage() {
 
   return (
     <div style={{ minHeight: '100vh', background: 'var(--cream)' }}>
-      {/* Header */}
       <div style={{ background: 'var(--charcoal)', padding: '20px 32px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <span style={{ fontFamily: 'var(--font-script)', fontSize: '28px', color: 'var(--gold)' }}>crochetinggg — Admin</span>
         <button onClick={handleLogout} style={{ background: 'none', border: '1px solid rgba(250,247,242,0.3)', color: 'var(--cream)', padding: '6px 16px', cursor: 'pointer', fontSize: '12px', borderRadius: '4px' }}>Logout</button>
       </div>
 
-      {/* Tabs */}
       <div style={{ borderBottom: '1px solid var(--cream-dark)', padding: '0 32px', background: 'var(--white)' }}>
         {(['products', 'orders'] as const).map(t => (
           <button key={t} onClick={() => setTab(t)} style={{
@@ -222,15 +238,24 @@ export default function AdminPage() {
       </div>
 
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '40px 32px' }}>
-
-        {/* Products Tab */}
         {tab === 'products' && (
           <>
-            {/* Add Product Form */}
             <div style={{ background: 'var(--white)', border: '1px solid var(--cream-dark)', borderRadius: '4px', padding: '28px', marginBottom: '40px' }}>
               <p style={{ fontSize: '11px', letterSpacing: '2px', textTransform: 'uppercase', color: 'var(--gold)', marginBottom: '20px' }}>
                 {editingId !== null ? 'Editing Product' : 'Add New Product'}
               </p>
+
+              {/* Show existing image when editing */}
+              {editingId !== null && editingProduct?.images?.[0] && (
+                <div style={{ marginBottom: '16px' }}>
+                  <p style={{ fontSize: '11px', color: 'var(--brown-soft)', marginBottom: '8px' }}>Current Image:</p>
+                  <div style={{ position: 'relative', width: '80px', height: '80px', borderRadius: '4px', overflow: 'hidden', border: '1px solid var(--cream-dark)' }}>
+                    <Image src={editingProduct.images[0]} alt="current" fill style={{ objectFit: 'cover' }} />
+                  </div>
+                  <p style={{ fontSize: '11px', color: 'var(--brown-soft)', marginTop: '4px' }}>Select a new image below to replace, or leave empty to keep current.</p>
+                </div>
+              )}
+
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '12px', marginBottom: '12px' }}>
                 <input style={inputStyle} placeholder="Product name*" value={form.name} onChange={e => setForm(p => ({ ...p, name: e.target.value }))} />
                 <select style={inputStyle} value={form.category} onChange={e => setForm(p => ({ ...p, category: e.target.value }))}>
@@ -252,9 +277,8 @@ export default function AdminPage() {
                   color: 'var(--gold-dark)', transition: 'all 0.2s',
                   background: imageFile != null ? 'var(--gold-light)' : 'transparent',
                 }}>
-                  {imageFile != null ? `✓ ${(imageFile as File).name}` : 'Choose Image'}
-                  <input type="file" accept="image/*" onChange={e => setImageFile(e.target.files?.[0] || null)}
-                    style={{ display: 'none' }} />
+                  {imageFile != null ? `✓ ${imageFile.name}` : editingId !== null ? 'Replace Image (optional)' : 'Choose Image'}
+                  <input type="file" accept="image/*" onChange={e => setImageFile(e.target.files?.[0] || null)} style={{ display: 'none' }} />
                 </label>
               </div>
               <div style={{ display: 'flex', gap: '12px', alignItems: 'center', flexWrap: 'wrap' }}>
@@ -263,28 +287,21 @@ export default function AdminPage() {
                 </button>
                 {editingId !== null && (
                   <>
-                    <button className="btn-primary" onClick={addProduct} disabled={loading}
-                      style={{ background: 'var(--gold-dark)' }}>
+                    <button className="btn-primary" onClick={addProduct} disabled={loading} style={{ background: 'var(--gold-dark)' }}>
                       {loading ? 'Saving...' : 'Save Changes'}
                     </button>
-                    <button className="btn-outline" onClick={() => {
-                      setEditingId(null)
-                      setForm({ name: '', category: 'Bouquet', price: '', stock: '', tag: '', description: '' })
-                      setImageFile(null)
-                      setMsg('')
-                    }}>Cancel</button>
+                    <button className="btn-outline" onClick={cancelEdit}>Cancel</button>
                   </>
                 )}
               </div>
             </div>
 
-            {/* Products Table */}
             <div style={{ background: 'var(--white)', border: '1px solid var(--cream-dark)', borderRadius: '4px', overflow: 'hidden' }}>
               <div style={{ overflowX: 'auto' }}>
                 <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '14px' }}>
                   <thead>
                     <tr style={{ background: 'var(--cream-dark)' }}>
-                      {['Name', 'Category', 'Price', 'Stock', 'Tag', 'Description', 'Actions'].map(h => (
+                      {['Image', 'Name', 'Category', 'Price', 'Stock', 'Tag', 'Description', 'Actions'].map(h => (
                         <th key={h} style={{ padding: '12px 16px', textAlign: 'left', fontSize: '11px', letterSpacing: '1.5px', textTransform: 'uppercase', color: 'var(--brown-soft)' }}>{h}</th>
                       ))}
                     </tr>
@@ -292,6 +309,13 @@ export default function AdminPage() {
                   <tbody>
                     {products.map(p => (
                       <tr key={p.id} style={{ borderBottom: '1px solid var(--cream-dark)' }}>
+                        <td style={{ padding: '12px 16px' }}>
+                          {p.images?.[0] ? (
+                            <div style={{ position: 'relative', width: '48px', height: '48px', borderRadius: '4px', overflow: 'hidden' }}>
+                              <Image src={p.images[0]} alt={p.name} fill style={{ objectFit: 'cover' }} />
+                            </div>
+                          ) : <span style={{ fontSize: '12px', color: 'var(--brown-soft)' }}>—</span>}
+                        </td>
                         <td style={{ padding: '12px 16px', fontFamily: 'var(--font-display)', color: 'var(--charcoal)' }}>{p.name}</td>
                         <td style={{ padding: '12px 16px', color: 'var(--gold)', fontSize: '12px' }}>{p.category}</td>
                         <td style={{ padding: '12px 16px' }}>₹{p.price}</td>
@@ -304,7 +328,8 @@ export default function AdminPage() {
                               style={{ width: '24px', height: '24px', border: '1px solid var(--cream-dark)', background: 'var(--cream)', borderRadius: '50%', cursor: 'pointer', fontSize: '14px' }}>+</button>
                           </div>
                         </td>
-                        <td style={{ padding: '12px 16px', fontSize: '12px', color: 'var(--brown-soft)', maxWidth: '200px' }}>{p.description || '—'}</td>
+                        <td style={{ padding: '12px 16px', fontSize: '12px', color: 'var(--brown-soft)' }}>{p.tag || '—'}</td>
+                        <td style={{ padding: '12px 16px' }}><DescriptionCell text={p.description} /></td>
                         <td style={{ padding: '12px 16px' }}>
                           <div style={{ display: 'flex', gap: '8px' }}>
                             <button onClick={() => startEdit(p)}
@@ -322,7 +347,6 @@ export default function AdminPage() {
           </>
         )}
 
-        {/* Orders Tab */}
         {tab === 'orders' && (
           <div style={{ background: 'var(--white)', border: '1px solid var(--cream-dark)', borderRadius: '4px', overflow: 'hidden' }}>
             {orders.length === 0 && <p style={{ padding: '32px', color: 'var(--brown-soft)', fontSize: '14px' }}>No orders yet.</p>}
