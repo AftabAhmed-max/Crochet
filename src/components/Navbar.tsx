@@ -29,7 +29,7 @@ export default function Navbar() {
 
         {/* Logo */}
         <Link href="/" style={{ textDecoration: 'none' }}>
-          <span style={{ fontFamily: 'var(--font-script)', fontSize: '28px', color: 'var(--gold-dark)' }}>crochetin</span>
+          <span style={{ fontFamily: 'var(--font-script)', fontSize: '28px', color: 'var(--gold-dark)' }}>crochet</span>
         </Link>
 
         {/* Desktop Links */}
